@@ -75,12 +75,14 @@ def insertPost(request):
     return render(request, 'index.html', context)
 
 
+@login_required
 def post(request, pk):
     post = Post.objects.get(id=pk)
     context = {'post': post}
     return render(request, 'post.html', context)
 
 
+@login_required
 def editPost(request, pk):
     post = Post.objects.get(id=pk)
     form = PostForm(instance=post)

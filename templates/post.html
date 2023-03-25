@@ -66,10 +66,15 @@
 
 	{% for tag in post.tags.all %}
 		<span class="tag">{{tag}}</span>
+		
 	{% endfor %}
 	<hr>
 
-	<p>{{post.body|safe}}</p>
+	<p>{{post.body|safe}}
+		{% if post.qr_code %}
+		<img src="{{ post.qr_code.url }}" alt="QR Code" />
+	  {% endif %}
+	</p>
 </div>
 
 {% endblock content %}
