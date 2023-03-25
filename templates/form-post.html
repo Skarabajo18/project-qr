@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 {% include 'navbar.html'%}
+{% if user.is_superuser %}
 <style type="text/css">
     #div_id_tags>div {
         max-height: 100px;
@@ -25,5 +26,5 @@
     </form>
 
 </div>
-
+{% endif %}
 {% endblock content %}

@@ -72,7 +72,9 @@
 
 	<p>{{post.body|safe}}
 		{% if post.qr_code %}
+		{% if user.is_superuser %}
 		<img src="{{ post.qr_code.url }}" alt="QR Code" />
+		{% endif %}
 	  {% endif %}
 	</p>
 </div>

@@ -17,7 +17,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('insertPost')
+            return redirect('postList')
         else:
             error_message = 'Invalid login credentials'
             return render(request, 'login.html', {'error_message': error_message})
