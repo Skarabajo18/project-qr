@@ -7,7 +7,8 @@ urlpatterns = [
     # path('logout/', views.logout_view, name='logout'),
     # path('signup/', views.signup, name='signup'),
     # ----- Ckeditor -----
-    path('', views.insertPost, name='insertPost'),
+    path('', views.postList, name='postList'),
     path('post/<str:pk>/', views.post, name="post"),
     path('edit/<str:pk>', views.editPost, name='editUrl'),
+    path('form-post/', views.insertPost, name='form-post')
 ]

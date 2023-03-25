@@ -72,6 +72,21 @@ def insertPost(request):
             form.save()
         return redirect('/')
     context = {'form': form, 'posts': posts}
+    return render(request, 'form-post.html', context)
+
+
+@login_required
+def postList(request):
+    # posts = Post.objects.all()
+    posts = Post.objects.filter(state=True)
+
+    form = PostForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        return redirect('/')
+    context = {'form': form, 'posts': posts}
     return render(request, 'index.html', context)
 
 
@@ -92,7 +107,7 @@ def editPost(request, pk):
             form.save()
         return redirect('/')
     context = {'form': form}
-    return render(request, 'index.html', context)
+    return render(request, 'form-post.html', context)
 
 
 # def post(request, pk):

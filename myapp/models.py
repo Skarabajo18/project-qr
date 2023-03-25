@@ -19,7 +19,7 @@ class Tag (models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    body = models.TextField(null=True, blank=True)
+    body = RichTextField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True,
                               upload_to="post", default="placeholder.png")
     state = models.BooleanField('Active', default=False)
@@ -59,4 +59,4 @@ class Post(models.Model):
         return reverse('post', args=[str(self.id)])
 
     def get_absolute_url_with_localhost(self):
-        return f'http://localhost:8000{self.get_absolute_url()}'
+        return f'http://192.168.100.96:8000{self.get_absolute_url()}'
