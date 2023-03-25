@@ -5,6 +5,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
+from django.shortcuts import render, redirect
+from .models import *
+from .forms import *
 
 
 def login_view(request):
@@ -14,7 +17,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('insertPost')
         else:
             error_message = 'Invalid login credentials'
             return render(request, 'login.html', {'error_message': error_message})
@@ -22,39 +25,72 @@ def login_view(request):
         return render(request, 'login.html')
 
 
-def logout_view(request):
-    logout(request)
-    return redirect('home')
+# def logout_view(request):
+#     logout(request)
+#     return redirect('home')
 
 
-@login_required
-def home(request):
-    username = request.user
-    context = {
-        'username': username,
-    }
-    return render(request,  'home.html', context)
+# @login_required
+# def home(request):
+#     username = request.user
+#     context = {
+#         'username': username,
+#     }
+#     return render(request,  'home.html', context)
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+# def signup(request):
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password1')
+#             user = authenticate(username=username, password=password)
+#             login(request, user)
+#             return redirect('home')
+#     else:
+#         form = UserCreationForm()
+#     return render(request, 'signup.html', {'form': form})
 
 
 @csrf_protect
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+@login_required
+def insertPost(request):
+    # posts = Post.objects.all()
+    posts = Post.objects.filter(state=True)
+
+    form = PostForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        return redirect('/')
+    context = {'form': form, 'posts': posts}
+    return render(request, 'index.html', context)
+
+
+def post(request, pk):
+    post = Post.objects.get(id=pk)
+    context = {'post': post}
+    return render(request, 'post.html', context)
+
+
+def editPost(request, pk):
+    post = Post.objects.get(id=pk)
+    form = PostForm(instance=post)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+        return redirect('/')
+    context = {'form': form}
+    return render(request, 'index.html', context)
 
 
 # def post(request, pk):
