@@ -18,12 +18,13 @@
 }
 
 .post-preview {
-    background-color: #fff;
+    background-color: #353333;
     padding: 15px;
+    
 }
 
 .post-title {
-    color: black;
+    color: rgb(255, 255, 255);
     margin: 0;
 }
 

@@ -25,9 +25,7 @@
     </form>
 
 </div> -->
-<button class="btn-danger"href="{% url 'form-post' %}" >
-    <h1>crear</h1>
-</button>
+
 <section class="s1">
     <div class="main-container">
         <h3 style="text-align: center;">All Projects</h3>
@@ -43,7 +41,7 @@
                         <span class="tag">{{tag}}</span>
                         {% endfor %}
                         <hr>
-                        <a href="{%  url 'post' post.id %}">Read More</a>
+                        <a href="{%  url 'post' post.id %}"class="btn btn-sm btn-primary">Read More</a>
                         {% if user.is_superuser %}
                         <a class="btn btn-sm btn-primary" href="{% url 'editUrl' post.id %}">Edit</a>
                         {% endif %}
