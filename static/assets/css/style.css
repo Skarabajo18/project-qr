@@ -11,52 +11,71 @@
 }
 
 .post {
-    border: 1px solid var(--borderColor);
-    -webkit-box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
-    box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
+  border: 1px solid var(--borderColor);
+  -webkit-box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
+  box-shadow: -2px 7px 21px -9px rgba(0, 0, 0, 0.75);
 }
 
 .post-preview {
-    background-color: #353333;
-    padding: 15px;
-    
+  background-color: #353333;
+  padding: 15px;
 }
 
 .post-title {
-    color: rgb(255, 255, 255);
-    margin: 0;
+  color: rgb(255, 255, 255);
+  margin: 0;
 }
 
 .post-intro {
-    color: #4b5156;
-    font-size: 14px;
+  color: #4b5156;
+  font-size: 14px;
 }
 
 .post-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 320px);
-    gap: 20px;
-    justify-content: center;
-    padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 320px);
+  gap: 20px;
+  justify-content: center;
+  padding-bottom: 50px;
+  max-width: 100%; /* Añade esta propiedad */
 }
 
 .thumbnail {
-    display: block;
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
 }
 
 .tag {
-    display: inline-block;
-    color: #fff;
-    background-color: #888;
-    border-radius: 5px;
-    margin: 2px;
-    padding: 2px 5px;
-    font-size: 12px;
+  display: inline-block;
+  color: #fff;
+  background-color: #888;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 2px 5px;
+  font-size: 12px;
 }
+
+@media only screen and (max-width: 578px) {
+  .post {
+    width: 90%;
+    margin: auto;
+
+  }
+  .main-container{
+    width: 90%;
+    margin: auto;
+
+  }
+  .post-wrapper {
+    width: 90%;
+    margin: auto;
+    grid-template-columns: 1fr;
+    }
+}
+
 
 /* navbar */
 @media (min-width : 992px) {
@@ -87,3 +106,29 @@
   .navbar-nav li a {
   color: white !important;
   }
+
+   /*boton*/
+   .btnsignup{
+    padding: 5px 5px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #09ff00;
+    letter-spacing: 1.5px;
+    font-size: 15px;
+    transition: all .3s ease;
+    box-shadow: #0aca00 0px 10px 0px 0px;
+    color: hsl(0, 0%, 100%);
+    
+   }
+   
+   .btnsignup:hover {
+    box-shadow: #0aca00 0px 7px 0px 0px;
+   }
+   
+  .btnsignup:active {
+    background-color: #0aca00;
+    /*50, 168, 80*/
+    box-shadow: #0aca00 0px 0px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
+   }

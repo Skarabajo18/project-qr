@@ -29,11 +29,12 @@
 <section class="s1">
     <div class="main-container">
         <h3 style="text-align: center;">All Projects</h3>
+        
 
-        <div class="post-wrapper">
+        <div class="post-wrapper " >
             {% for post in posts %}
             <div>
-                <div class="post">
+                <div class="post" >
                     <img class="thumbnail" src="{{post.image.url}}">
                     <div class="post-preview">
                         <h6 class="post-title">{{post.title}}</h6>
