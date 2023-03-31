@@ -10,5 +10,7 @@ urlpatterns = [
     path('', views.postList, name='postList'),
     path('post/<str:pk>/', views.post, name="post"),
     path('edit/<str:pk>', views.editPost, name='editUrl'),
-    path('form-post/', views.insertPost, name='form-post')
+    path('form-post/', views.insertPost, name='form-post'),
+    path('search/', views.search, name='search'),
+
 ]

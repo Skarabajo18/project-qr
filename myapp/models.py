@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.db import models
 import uuid
 from ckeditor.fields import RichTextField

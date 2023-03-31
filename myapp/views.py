@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -8,6 +9,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def login_view(request):
@@ -75,18 +77,43 @@ def insertPost(request):
     return render(request, 'form-post.html', context)
 
 
+# @login_required
+# def postList(request):
+#     # posts = Post.objects.all()
+#     posts = Post.objects.filter(state=True)
+
+#     form = PostForm()
+#     if request.method == 'POST':
+#         form = PostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#         return redirect('/')
+#     context = {'form': form, 'posts': posts}
+#     return render(request, 'index.html', context)
+
+
 @login_required
 def postList(request):
-    # posts = Post.objects.all()
-    posts = Post.objects.filter(state=True)
-
-    form = PostForm()
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-        return redirect('/')
-    context = {'form': form, 'posts': posts}
+            return redirect('/')
+    else:
+        form = PostForm()
+
+    query = request.GET.get('q')
+    if query:
+        posts = Post.objects.filter(state=True, title__icontains=query)
+    else:
+        posts = Post.objects.filter(state=True)
+
+    # Paginación
+    paginator = Paginator(posts, 6)  # 10 elementos por página
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'form': form, 'page_obj': page_obj}
     return render(request, 'index.html', context)
 
 
@@ -108,6 +135,39 @@ def editPost(request, pk):
         return redirect('/')
     context = {'form': form}
     return render(request, 'form-post.html', context)
+
+
+def search(request):
+    if request.method == 'GET':
+        query = request.GET.get('q')
+
+        if query:
+            results = Post.objects.filter(title__icontains=query)
+            context = {'results': results, 'query': query}
+            return render(request, 'search.html', context)
+
+    return redirect('postList')
+
+
+def all_projects(request):
+    post_list = Post.objects.all()
+    paginator = Paginator(post_list, 10)  # Mostrar 10 publicaciones por página
+
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # Si el número de página no es un entero, mostrar la primera página.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # Si el número de página está fuera de rango (por ejemplo, 9999),
+        # mostrar la última página de resultados.
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'all_projects.html', context)
 
 
 # def post(request, pk):
