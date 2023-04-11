@@ -1,3 +1,6 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Post
+from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
@@ -164,8 +167,18 @@ def all_projects(request):
         # mostrar la última página de resultados.
         posts = paginator.page(paginator.num_pages)
 
+    # Agregar números de página a la paginación
+    index = posts.number - 1  # El índice de la página actual
+    max_index = len(paginator.page_range)  # El número total de páginas
+    start_index = index - 5 if index >= 5 else 0  # El índice de la página de inicio
+    end_index = index + 5 if index <= max_index - \
+        5 else max_index  # El índice de la página de fin
+    # La lista de páginas para mostrar en la paginación
+    page_range = list(paginator.page_range)[start_index:end_index]
+
     context = {
         'posts': posts,
+        'page_range': page_range,  # Pasar la lista de números de página al contexto
     }
     return render(request, 'all_projects.html', context)
 
@@ -213,3 +226,9 @@ def all_projects(request):
 # def post_list(request):
 #     posts = Post.objects.all()
 #     return render(request, 'post_list.html', {'posts': posts})
+
+
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    context = {'post': post}
+    return render(request, 'index.html', context)

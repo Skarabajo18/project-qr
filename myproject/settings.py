@@ -59,6 +59,118 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+JAZZMIN_SETTINGS = {
+    # Título de la ventana (se utilizará current_admin_site.site_title si está ausente o None)
+    "site_title": "Administrar Publicaciones",
+    # Título en la pantalla de inicio de sesión (máximo 19 caracteres) (se utilizará current_admin_site.site_header si está ausente o None)
+    "site_header": "Administrar Publicaciones",
+
+    # Título en la marca (máximo 19 caracteres) (se utilizará current_admin_site.site_header si está ausente o None)
+    "site_brand": "Administrar Publicaciones",
+
+    # Logo a utilizar para su sitio, debe estar presente en los archivos estáticos, se utiliza para la marca en la parte superior izquierda
+    "site_logo": "books/img/logo.png",
+
+    # Logo a utilizar para el formulario de inicio de sesión (se utilizará site_logo si está ausente)
+    "login_logo": None,
+
+    # Logo a utilizar para el formulario de inicio de sesión en temas oscuros (se utiliza login_logo si está ausente)
+    "login_logo_dark": None,
+
+    # Clases CSS que se aplican al logo de arriba
+    "site_logo_classes": "img-circle",
+
+    # Ruta relativa a un favicon para su sitio, se utilizará site_logo si está ausente (idealmente 32x32 px)
+    "site_icon": None,
+
+    # Texto de bienvenida en la pantalla de inicio de sesión
+    "welcome_sign": "Bienvenido a la biblioteca",
+
+    # Derechos de autor en el pie de página
+    "copyright": "Skarabajo",
+
+    # Lista de administradores de modelos para buscar desde la barra de búsqueda, se omite la barra de búsqueda si se excluye
+    # Si desea utilizar un solo campo de búsqueda, no necesita usar una lista, puede utilizar una cadena simple
+    "search_model": ["auth.User", "auth.Group"],
+
+    # Nombre del campo en el modelo de usuario que contiene ImageField/URLField/Charfield de avatar o un callable que recibe al usuario
+    "user_avatar": None,
+
+    ############
+    # Menú superior #
+    ############
+
+    # Enlaces para colocar en el menú superior
+    "topmenu_links": [
+
+        # URL que se invierte (se pueden agregar permisos)
+        {"name": "Inicio",  "url": "admin:index",
+         "permissions": ["auth.view_user"]},
+
+        # URL externa que se abre en una nueva ventana (se pueden agregar permisos)
+        {"name": "Soporte", "url": "https://github.com/farridav/django-jazzmin/issues",
+         "new_window": True},
+
+        # administrador de modelo para enlazar (Permisos comprobados en el modelo)
+        {"model": "auth.User"},
+
+        # Aplicación con menú desplegable para todas las páginas de sus modelos (permisos comprobados en los modelos)
+        {"app": "books"},
+    ],
+
+    #############
+    # Menú de usuario #
+    #############
+
+    # Enlaces adicionales para incluir en el menú de usuario en la parte superior derecha (no se permite el tipo de url "app")
+    "usermenu_links": [
+        {"name": "Soporte", "url": "https://github.com/farridav/django-jazzmin/issues",
+         "new_window": True},
+        {"model": "auth.user"}
+    ],
+
+    #############
+    # Menú lateral #
+    #############
+
+    # Si se debe mostrar el menú lateral
+    "show_sidebar": True,
+    "show_ui_builder": True,
+    "custom_css": "static/assets/css/style.css",
+}
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": True,
+    "footer_small_text": True,
+    "body_small_text": True,
+    "brand_small_text": True,
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-dark",
+    "no_navbar_border": True,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": True,
+    "sidebar_disable_expand": True,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": True,
+    "sidebar_nav_flat_style": False,
+    "theme": "superhero",
+    "dark_mode_theme": "superhero",
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    },
+    "actions_sticky_top": False
+}
+
 ROOT_URLCONF = "myproject.urls"
 
 TEMPLATES = [
